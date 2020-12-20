@@ -25,3 +25,4 @@ const userschema = new Schema({
     }
 })
 module.exports = User = mongoose.model('users',userschema)
+// module.exports = User = mongoose.model('webs',userschema)

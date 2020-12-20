@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../../models/user')
 const bcrypt = require('bcrypt')
 const gravatar = require('gravatar');
-const user = require('../../models/user');
+// const user = require('../../models/user');
 router.get('/test',(req,res) =>{
     res.json({
         name:'login name'
