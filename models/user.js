@@ -16,6 +16,9 @@ const userschema = new Schema({
     avatar:{
         type:String,
     },
+    phone:{
+        type:Number,
+    },
     data:{
         type:Date,
         default:Date.now

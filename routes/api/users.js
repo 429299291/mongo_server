@@ -20,7 +20,8 @@ router.post("/register",(req,res) => {
                     name : req.body.name,
                     email : req.body.email,
                     avatar,
-                    password: req.body.password
+                    password: req.body.password,
+                    phone: req.body.phone
                 })
                 // 密码加密模式
                 bcrypt.genSalt(10, function(err, salt) {
@@ -34,6 +35,16 @@ router.post("/register",(req,res) => {
                     });
                 });
 
+            }
+        })
+})
+router.get("/1",(req,res) =>{
+    User.findOne({email:'429299291@qq.com'})
+        .then(user =>{
+            if(!user){
+                return res.status(404).json({email:'用户出错'})
+            }else{
+                return res.status(200).json(user)
             }
         })
 })
