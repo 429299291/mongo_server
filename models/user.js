@@ -16,6 +16,9 @@ const userschema = new Schema({
     avatar:{
         type:String,
     },
+    identity:{
+        type:String,
+    },
     phone:{
         type:Number,
     },
