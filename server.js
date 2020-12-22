@@ -5,6 +5,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const passport = require('passport')
 const users = require('./routes/api/users.js')
+const profiles = require('./routes/api/profiles.js')
 
 mongoose.connect(db,{useNewUrlParser: true,useUnifiedTopology: true})
     .then(() =>{
@@ -19,12 +20,13 @@ app.get("/",(req,res) =>{
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 app.use("/api/users",users)
-app.use("/users",users)
+app.use("/api/profiles",profiles)
+// app.use("/users",users)
 
 app.use(passport.initialize());
 require('./config/passport')(passport);
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 7003
 app.listen(port,() => {
     console.log(`监听${port}`)
 })
