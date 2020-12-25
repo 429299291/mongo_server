@@ -9,9 +9,7 @@ const keys = require('../../config/keys');
 const user = require('../../models/user');
 // const user = require('../../models/user');
 router.get('/test',(req,res) =>{
-    res.json({
-        name:'login name'
-    })
+    res.json('34535')
 })
 router.post("/register",(req,res) => {
     User.findOne({email:req.body.email})
@@ -47,7 +45,7 @@ router.get("/1",(req,res) =>{
     User.findOne({email:'429299291@qq.com'})
         .then(user =>{
             if(!user){
-                return res.status(404).json({email:'用户出错'})
+                return res.status(404).json('用户出错')
             }else{
                 return res.status(200).json(user)
             }
@@ -60,7 +58,7 @@ router.post("/login",(req,res) =>{
     User.findOne({email})
         .then(user =>{
             if(!user){
-                return res.status(404).json({email:'用户不存在'})
+                return res.status(404).json('用户不存在')
             }
             //密码匹配
             bcrypt.compare(password, user.password, (err, result) =>{
@@ -76,7 +74,7 @@ router.post("/login",(req,res) =>{
                     })
                     // res.json({msg:'密码成功'})
                 }else{
-                    res.json({msg:'密码错误'})
+                    res.status(404).json({msg:'密码错误'})
                 }
             });
 
@@ -89,7 +87,8 @@ router.get('/current',passport.authenticate('jwt',{session:false}),(req,res) =>{
         id:req.user.id,
         name:req.user.name,
         email:req.user.email,
-        identity:req.user.identity
+        identity:req.user.identity,
+        avatar:req.user.avatar
     })
 })
 module.exports = router;
