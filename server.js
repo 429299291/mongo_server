@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const passport = require('passport')
 const users = require('./routes/api/users.js')
 const profiles = require('./routes/api/profiles.js')
+const comments = require('./routes/api/comments.js')
 
 mongoose.connect(db,{useNewUrlParser: true,useUnifiedTopology: true})
     .then(() =>{
@@ -34,6 +35,7 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 app.use("/api/users",users)
 app.use("/api/profiles",profiles)
+app.use("/api/comments",comments)
 // app.use("/users",users)
 
 app.use(passport.initialize());

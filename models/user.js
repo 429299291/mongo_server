@@ -19,8 +19,17 @@ const userschema = new Schema({
     identity:{
         type:String,
     },
-    phone:{
-        type:Number,
+    phoneNumber:{
+        type:String,
+    },
+    actualName:{
+        type:String,
+    },
+    profession:{
+        type:String,
+    },
+    address:{
+        type:String,
     },
     data:{
         type:Date,

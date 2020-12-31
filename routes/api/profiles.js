@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../../models/user')
 
-const Profile = require('../../models/Profile');
+const Profile = require('../../models/profile');
 const passport = require('passport');
 // const user = require('../../models/user');
 router.get('/test',(req,res) =>{
@@ -43,6 +43,8 @@ router.post('/edit/:id',passport.authenticate('jwt',{session:false}),(req,res) =
     // res.json({msg:'success'})
     const profileFields = {}
     if(req.body.names) profileFields.names = req.body.names;
+    console.log('===========')
+    console.log(req.body.names)
 
     Profile.findOneAndUpdate(
         {_id: req.params.id},

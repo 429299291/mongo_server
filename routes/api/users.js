@@ -22,9 +22,12 @@ router.post("/register",(req,res) => {
                     name : req.body.name,
                     email : req.body.email,
                     avatar,
-                    identity:req.body.identity || 'person',
+                    identity:req.body.identity || '普通会员',
                     password: req.body.password,
-                    phone: req.body.phone
+                    phoneNumber: req.body.phoneNumber,
+                    actualName: req.body.actualName,
+                    profession: req.body.profession,
+                    address: req.body.address,
                 })
                 // 密码加密模式
                 bcrypt.genSalt(10, function(err, salt) {
@@ -41,6 +44,21 @@ router.post("/register",(req,res) => {
             }
         })
 })
+router.post('/edit/:id',passport.authenticate('jwt',{session:false}),(req,res) =>{
+    const profileFields = {}
+    console.log('===============')
+    console.log(req.body)
+    if(req.body.name) profileFields.name = req.body.name;
+
+    Profile.findOneAndUpdate(
+        {_id: req.params.id},
+        {$set: profileFields},
+        {new:true}
+    ).then(profile =>{
+        res.json(profile)
+    })
+})
+
 router.get("/1",(req,res) =>{
     User.findOne({email:'429299291@qq.com'})
         .then(user =>{
@@ -54,6 +72,7 @@ router.get("/1",(req,res) =>{
 router.post("/login",(req,res) =>{
     const email = req.body.email
     const password = req.body.password
+    console.log(email)
     //查询数据库
     User.findOne({email})
         .then(user =>{
@@ -88,7 +107,11 @@ router.get('/current',passport.authenticate('jwt',{session:false}),(req,res) =>{
         name:req.user.name,
         email:req.user.email,
         identity:req.user.identity,
-        avatar:req.user.avatar
+        avatar:req.user.avatar,
+        profession:req.user.profession,
+        actualName:req.user.actualName,
+        phoneNumber:req.user.phoneNumber,
+        address:req.user.address
     })
 })
 module.exports = router;
