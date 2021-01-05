@@ -9,13 +9,18 @@ const comment = require('../../models/comment');
 router.post('/comment',(req,res) =>{
     const newComment = new Comment({
         name : req.body.name,
+        commentId:req.body.commentId,
         content : req.body.content,
     })
     newComment.save()
                 .then(comment =>{res.json(comment)})
 })
-router.get('/comment',(req,res) =>{
-    Comment.find().then(comments =>{
+router.post('/commentList',(req,res) =>{
+    const commentId = req.body.commentId
+    Comment.find({commentId}).then(comments =>{
+        if(!comments){
+            return res.status(404).json('暂无评价')
+        }
         res.json(comments)
     })
 })

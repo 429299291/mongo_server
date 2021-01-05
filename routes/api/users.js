@@ -44,17 +44,33 @@ router.post("/register",(req,res) => {
             }
         })
 })
+//编辑个人资料
 router.post('/edit/:id',passport.authenticate('jwt',{session:false}),(req,res) =>{
-    const profileFields = {}
-    console.log('===============')
-    console.log(req.body)
-    if(req.body.name) profileFields.name = req.body.name;
+    const usersFields = {}
+    if(req.body.name){
+        usersFields.name = req.body.name
+    }else if(req.body.email){
+        usersFields.email = req.body.email
+    }else if(req.body.profession){
+        usersFields.profession = req.body.profession
+    }else if(req.body.actualName){
+        usersFields.actualName = req.body.actualName
+    }else if(req.body.phoneNumber){
+        usersFields.phoneNumber = req.body.phoneNumber
+    }else if(req.body.address){
+        usersFields.address = req.body.address
+    }else{
+        return res.status(404).json('不能修改')
+    }
+    console.log(usersFields)
 
-    Profile.findOneAndUpdate(
+    User.findOneAndUpdate(
         {_id: req.params.id},
-        {$set: profileFields},
+        {$set: usersFields},
         {new:true}
     ).then(profile =>{
+        console.log('成功了')
+        console.log(profile)
         res.json(profile)
     })
 })
@@ -106,6 +122,7 @@ router.get('/current',passport.authenticate('jwt',{session:false}),(req,res) =>{
         id:req.user.id,
         name:req.user.name,
         email:req.user.email,
+        password:req.user.password,
         identity:req.user.identity,
         avatar:req.user.avatar,
         profession:req.user.profession,
