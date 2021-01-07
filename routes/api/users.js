@@ -15,7 +15,7 @@ router.post("/register",(req,res) => {
     User.findOne({email:req.body.email})
         .then(user =>{
             if(user){
-                return res.status(400).json({email:'邮箱已被注册'})
+                return res.status(204).json({email:'邮箱已被注册'})
             }else{
                 const avatar = gravatar.url(req.body.email, {s: '200', r: 'pg', d: 'mm'});
                 const newUser = new User({
@@ -83,6 +83,12 @@ router.get("/1",(req,res) =>{
             }else{
                 return res.status(200).json(user)
             }
+        })
+})
+router.get("/managementData",(req,res) =>{
+    User.find()
+        .then(user =>{
+            return res.status(200).json(user)
         })
 })
 router.post("/login",(req,res) =>{
