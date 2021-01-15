@@ -28,6 +28,7 @@ router.post("/register",(req,res) => {
                     actualName: req.body.actualName,
                     profession: req.body.profession,
                     address: req.body.address,
+                    balance: 0,
                 })
                 // 密码加密模式
                 bcrypt.genSalt(10, function(err, salt) {
@@ -47,6 +48,7 @@ router.post("/register",(req,res) => {
 //编辑个人资料
 router.post('/edit/:id',passport.authenticate('jwt',{session:false}),(req,res) =>{
     const usersFields = {}
+    console.log(req.body)
     if(req.body.name){
         usersFields.name = req.body.name
     }else if(req.body.email){
@@ -59,19 +61,18 @@ router.post('/edit/:id',passport.authenticate('jwt',{session:false}),(req,res) =
         usersFields.phoneNumber = req.body.phoneNumber
     }else if(req.body.address){
         usersFields.address = req.body.address
+    }else if(req.body.balanceChange){
+        usersFields.balance = req.body.balanceChange
     }else{
         return res.status(404).json('不能修改')
     }
-    console.log(usersFields)
 
     User.findOneAndUpdate(
         {_id: req.params.id},
         {$set: usersFields},
         {new:true}
     ).then(profile =>{
-        console.log('成功了')
-        console.log(profile)
-        res.json(profile)
+        res.status(200).json(profile)
     })
 })
 
@@ -134,7 +135,8 @@ router.get('/current',passport.authenticate('jwt',{session:false}),(req,res) =>{
         profession:req.user.profession,
         actualName:req.user.actualName,
         phoneNumber:req.user.phoneNumber,
-        address:req.user.address
+        address:req.user.address,
+        balance:req.user.balance
     })
 })
 module.exports = router;

@@ -31,6 +31,12 @@ const userschema = new Schema({
     address:{
         type:String,
     },
+    shipType:{
+        type:String
+    },
+    balance:{
+        type:Number,
+    },
     data:{
         type:Date,
         default:Date.now

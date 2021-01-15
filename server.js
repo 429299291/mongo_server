@@ -7,6 +7,7 @@ const passport = require('passport')
 const users = require('./routes/api/users.js')
 const profiles = require('./routes/api/profiles.js')
 const comments = require('./routes/api/comments.js')
+const orderList = require('./routes/api/orderList')
 
 mongoose.connect(db,{useNewUrlParser: true,useUnifiedTopology: true})
     .then(() =>{
@@ -16,6 +17,14 @@ mongoose.connect(db,{useNewUrlParser: true,useUnifiedTopology: true})
 app.get("/",(req,res) =>{
     res.send('hello world')
 })
+
+var http=require("http");
+ var server=http.createServer();
+ server.on("request",function(req,res){
+     if(req.url!=="/favicon.ico")
+         console.log(req.url);
+     res.end();
+ });
 
 //跨域问题
 app.all("*",function(req,res,next){
@@ -36,6 +45,7 @@ app.use(bodyParser.json())
 app.use("/api/users",users)
 app.use("/api/profiles",profiles)
 app.use("/api/comments",comments)
+app.use('/api/orderLists',orderList)
 // app.use("/users",users)
 
 app.use(passport.initialize());
