@@ -46,6 +46,10 @@ const orderListSchema = new Schema({
     shipType:{
         type:String
     },
+    data:{
+        type:Date,
+        default:Date.now
+    }
     
 
 })

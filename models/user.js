@@ -37,7 +37,7 @@ const userschema = new Schema({
     balance:{
         type:Number,
     },
-    data:{
+    date:{
         type:Date,
         default:Date.now
     }

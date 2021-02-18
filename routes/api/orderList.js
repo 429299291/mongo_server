@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const OrderList = require('../../models/orderList')
-router.get('/orderListall',(req,res) =>{
-    OrderList.find()
+router.post('/orderListall',(req,res) =>{
+    OrderList.findOne({email:req.body.email})
         .then(datas=>{
             console.log('houtai')
             res.status(200).json(datas)
